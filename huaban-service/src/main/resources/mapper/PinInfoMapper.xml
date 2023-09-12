@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.PinInfoMapper">
+
+    <update id="saveAllWithIngnore">
+        insert ignore into pin_info (
+            `user_id`,
+            `board_id`,
+            `pin_id`,
+            `source`,
+            `source_url`,
+            `raw_text`,
+            `file_url`,
+            `repin_count`,
+            `like_count`,
+            `via_user_id`,
+            `via_username`,
+            `via_urlname`,
+            `via_user_avatar`,
+            `created_at`,
+            `id`,
+            `raw_json`
+        ) VALUES
+        <foreach collection="pinInfos" item="pinInfo" separator=",">
+            (
+                #{pinInfo.userId},
+                #{pinInfo.boardId},
+                #{pinInfo.pinId},
+                #{pinInfo.source},
+                #{pinInfo.sourceUrl},
+                #{pinInfo.rawText},
+                #{pinInfo.fileUrl},
+                #{pinInfo.repinCount},
+                #{pinInfo.likeCount},
+                #{pinInfo.viaUserId},
+                #{pinInfo.viaUsername},
+                #{pinInfo.viaUrlname},
+                #{pinInfo.viaUserAvatar},
+                #{pinInfo.createdAt},
+                #{pinInfo.id},
+                #{pinInfo.rawJson}
+            )
+        </foreach>
+    </update>
+</mapper>

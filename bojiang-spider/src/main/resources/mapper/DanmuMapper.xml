@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.mapper.DanmuMapper">
+    <insert id="saveAll">
+        INSERT INTO danmu_info (
+            num,
+            uid,
+            rid,
+            date,
+            uname,
+            uavator,
+            level,
+            nl,
+            bl,
+            brid,
+            txt,
+            update_time,
+            anchorName,
+            anchorAvator,
+            anchorCate
+        ) VALUES
+        <foreach collection="danmuList" item="danmu" separator=",">
+            (
+                #{danmu.num},
+                #{danmu.uid},
+                #{danmu.rid},
+                #{danmu.date},
+                #{danmu.uname},
+                #{danmu.uavator},
+                #{danmu.level},
+                #{danmu.nl},
+                #{danmu.bl},
+                #{danmu.brid},
+                #{danmu.txt},
+                #{danmu.updateTime},
+                #{danmu.anchorName},
+                #{danmu.anchorAvator},
+                #{danmu.anchorCate}
+            )
+        </foreach>
+
+    </insert>
+    <select id="list" resultType="org.example.entity.Danmu" fetchSize="-2147483648" resultSetType="FORWARD_ONLY">
+        select
+            num,
+            uid,
+            rid,
+            date,
+            uname,
+            uavator,
+            level,
+            nl,
+            bl,
+            brid,
+            txt,
+            update_time as updateTime,
+            anchorName,
+            anchorAvator,
+            anchorCate
+        from
+            danmu_info
+    </select>
+</mapper>

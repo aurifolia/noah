@@ -3,3 +3,10 @@ server:
 spring:
   application:
     name: user-service
+#  config:
+#    import: optional:configserver:http://localhost:60020
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:60000/eureka/

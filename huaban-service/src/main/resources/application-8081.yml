@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/huaban?useSSL=true&serverTimezone=UTC
+    username: temp
+    password: 123
+huaban:
+  user:
+    ai-url-pattern: https://api.huaban.com/search/scene?filter_ids[]={filter}&filter_ids[]=5871245&page={page}&position=search_aigc&sort=all
+    discovery-url-pattern: https://api.huaban.com/pins/recommend/winnow?page_num={pageNum}&page_size=40&position=discovery_recommend
+    ui-url-pattern: https://api.huaban.com/pins/recommend/winnow?page_num={pageNum}&page_size=40&category={category}
+  board:
+    per-count: 30
+    url-pattern: https://api.huaban.com/{urlname}/boards?limit={limit}&urlname={urlname}
+  pin:
+    per-count: 40
+    url-pattern: https://api.huaban.com/boards/{boardId}/pins?limit={limit}
+    detail-url-pattern: https://api.huaban.com/pins/{pinId}?fields=pin:PIN_DETAIL&pins=20
+
+mybatis-plus:
+  mapper-locations:
+    - classpath:mapper/**.xml
+
+all-path: D:\Workspace\Java\idea\product\noah\huaban-service\src\main\resources\all3.txt
+done-path: D:\Workspace\Java\idea\product\noah\huaban-service\src\main\resources\done3.txt
+failed-path: D:\Workspace\Java\idea\product\noah\huaban-service\src\main\resources\failed3.txt
+exit-path: D:\tmp\status\exit-8081.txt
+threads: 10
+date-limit: 2023-01-01
+cookie: user_device_id=491d57aa1ec64acd8b9a32b45e7d495d; user_device_id_timestamp=1689395616471; sid=s%3AWnbd2cunKr7CgflzhRq4EH99kpZ3i2Nk.Eg%2BOvE5tGo5%2B2Cgx2yMxIgXCE%2Fo1Oor7vz8pthNcX7Y; Hm_up_d4a0e7c3cd16eb58a65472f40e7ee543=%7B%22has_plugin%22%3A%7B%22value%22%3A%220%22%2C%22scope%22%3A1%7D%2C%22version%22%3A%7B%22value%22%3A%222.0.0%22%2C%22scope%22%3A1%7D%7D; uid=37140841; gd_id=2024819887582225448; Hm_lvt_d4a0e7c3cd16eb58a65472f40e7ee543=1689395617,1689726223; Hm_lpvt_d4a0e7c3cd16eb58a65472f40e7ee543=1689726223; _ga_50RYEM7F09=GS1.1.1689726223.3.0.1689726223.0.0.0; _ga=GA1.2.1482215734.1689395617; _gid=GA1.2.226528930.1689726223; _gat_UA-135559536-2=1

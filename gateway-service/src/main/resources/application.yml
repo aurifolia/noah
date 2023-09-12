@@ -1,0 +1,39 @@
+server:
+  port: 60200
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+        - name: CircuitBreaker
+          args:
+            name: myCircuitBreaker
+            fallbackUri: forward:/myFallback
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myCircuitBreaker:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 30
+        permittedNumberOfCallsInHalfOpenState: 5
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 5s
+  timelimiter:
+    instances:
+      myCircuitBreaker:
+        timeoutDuration: 3s
+        cancelRunningFuture: true
+
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:60000/eureka/

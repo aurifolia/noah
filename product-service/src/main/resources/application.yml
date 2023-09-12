@@ -1,0 +1,20 @@
+server:
+  port: 60050
+spring:
+  application:
+    name: product-service
+  cloud:
+    bootstrap:
+      enabled: true
+
+encrypt:
+  key: AES256
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:60000/eureka/
+
+jasypt:
+  encryptor:
+    password: 123456
