@@ -12,24 +12,32 @@ spring:
       default-filters:
         - name: CircuitBreaker
           args:
-            name: myCircuitBreaker
+            name: testA
             fallbackUri: forward:/myFallback
+        - name: Retry
+          args:
+            retries: 100
+            methods:
+              - GET
+            statuses:
+              - INTERNAL_SERVER_ERROR
 
 resilience4j:
   circuitbreaker:
-    instances:
-      myCircuitBreaker:
+    configs:
+      testA:
         slidingWindowType: COUNT_BASED
-        slidingWindowSize: 10
-        failureRateThreshold: 30
-        permittedNumberOfCallsInHalfOpenState: 5
-        minimumNumberOfCalls: 5
-        waitDurationInOpenState: 5s
+        slidingWindowSize: 9
+        failureRateThreshold: 33
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 3
+        waitDurationInOpenState: 50s
   timelimiter:
-    instances:
-      myCircuitBreaker:
+    configs:
+      testA:
         timeoutDuration: 3s
         cancelRunningFuture: true
+
 
 
 
