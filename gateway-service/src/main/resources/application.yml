@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: gateway-service
+  main:
+    allow-circular-references: true
   cloud:
     gateway:
       discovery:
@@ -45,3 +47,4 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:60000/eureka/
+    registry-fetch-interval-seconds: 4
