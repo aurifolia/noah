@@ -11,7 +11,26 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      globalcors:
+        # 解决options请求被拦截问题
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          # 拦截的请求
+          '[/**]':
+            # 允许跨域的请求
+            #allowedOrigins: "*" # spring boot2.4以前的配置
+            allowedOriginPatterns: "*" # spring boot2.4以后的配置
+            # 允许请求中携带的头信息
+            allowedHeaders: "*"
+            # 运行跨域的请求方式
+            allowedMethods: "*"
+            # 是否允许携带cookie
+            allowCredentials: true
+            # 跨域检测的有效期,单位s
+            maxAge: 36000
+
       default-filters:
+        #- DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Headers Access-Control-Allow-Credentials
         - name: CircuitBreaker
           args:
             name: testA
@@ -34,11 +53,33 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         minimumNumberOfCalls: 3
         waitDurationInOpenState: 50s
+    instances:
+      testA:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 8
+        failureRateThreshold: 88
+        permittedNumberOfCallsInHalfOpenState: 8
+        minimumNumberOfCalls: 8
+        waitDurationInOpenState: 80s
+    circuit-breaker-aspect-order: 1000
   timelimiter:
     configs:
       testA:
         timeoutDuration: 3s
         cancelRunningFuture: true
+    instances:
+      testA:
+        timeoutDuration: 8s
+        cancelRunningFuture: true
+  retry:
+    configs:
+      myConf:
+        maxAttempts: 7
+        waitDuration: 10ms
+    instances:
+      testA:
+        baseConfig: myConf
+    retry-aspect-order: 2000
 
 
 
@@ -47,4 +88,4 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:60000/eureka/
-    registry-fetch-interval-seconds: 4
+    registry-fetch-interval-seconds: 400

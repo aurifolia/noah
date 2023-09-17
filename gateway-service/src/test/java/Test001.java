@@ -41,7 +41,7 @@ public class Test001 {
         pool.awaitTermination(1, TimeUnit.DAYS);
         System.out.println("finish");
         threadNameMap.forEach((k, v) -> {
-            System.out.println(String.format("%s -- > %s", k, v.get()));
+            System.out.printf("%s -- > %s%n", k, v.get());
         });
     }
 }

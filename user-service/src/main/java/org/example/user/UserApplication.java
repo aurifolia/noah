@@ -30,13 +30,16 @@ public class UserApplication {
         SpringApplication.run(UserApplication.class, args);
     }
 
-    private AtomicInteger integer = new AtomicInteger();
+    private final AtomicInteger integer = new AtomicInteger();
 
     @Value("${server.port}")
     private String port;
 
     @GetMapping("/time")
     public ResultDTO<ServiceInfo> time(HttpServletRequest request) {
+        if (integer.getAndIncrement() % 7 != 0) {
+            int a = 1 / 0;
+        }
         Map<String, String> result = new HashMap<>();
         result.put("service", "user-service");
         result.put("port", port);
@@ -44,7 +47,7 @@ public class UserApplication {
         result.put("dateTime", LocalDateTime.now().toString());
         ServiceInfo serviceInfo = new ServiceInfo();
         serviceInfo.setServiceName("user-service");
-        serviceInfo.setPort(Integer.parseInt(port));
+        serviceInfo.setPort(integer.get());
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
         request.getParameterMap().forEach((k, v) -> params.put(k, v[0]));

@@ -78,12 +78,12 @@ public class BojiangServiceImpl implements BojiangService {
             JSONObject body = restTemplate.exchange(requestEntity, JSONObject.class).getBody();
             JSONArray rows = body.getJSONObject("data").getJSONArray("rows");
             if (CollectionUtils.isEmpty(rows)) {
-                System.out.println(String.format("%s is not fount", keyword));
+                System.out.printf("%s is not fount%n", keyword);
             }
             else {
                 JSONObject jsonObject = rows.getJSONObject(0);
                 zhuboMapper.saveOne(jsonObject.to(Zhubo.class));
-                System.out.println(String.format("%s  -->  %s", keyword, jsonObject.getString("name")));
+                System.out.printf("%s  -->  %s%n", keyword, jsonObject.getString("name"));
             }
         }
     }

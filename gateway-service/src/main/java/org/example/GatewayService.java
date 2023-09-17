@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @EnableFeignClients
 @SpringBootApplication
-public class GatewayService implements ApplicationRunner {
+public class GatewayService {
     public static void main(String[] args) {
         SpringApplication.run(GatewayService.class, args);
     }
@@ -49,14 +49,5 @@ public class GatewayService implements ApplicationRunner {
     @GetMapping("/myFallback")
     public Mono<String> fallback() {
         return Mono.fromSupplier(() -> LocalDateTime.now().toString());
-    }
-
-    @Autowired
-    private UserWebClient userWebClient;
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        ResultDTO<ServiceInfo> time = userWebClient.time();
-        System.out.println();
     }
 }

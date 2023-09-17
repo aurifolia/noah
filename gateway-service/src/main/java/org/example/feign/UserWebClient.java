@@ -1,5 +1,7 @@
 package org.example.feign;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.example.dto.ResultDTO;
 import org.example.dto.ServiceInfo;
 import org.example.util.ReactiveRequestContextHolder;
@@ -42,6 +44,8 @@ public class UserWebClient {
                 .block(DURATION);
     }
 
+    @CircuitBreaker(name = "testA", fallbackMethod = "fallback")
+    @Retry(name = "testA", fallbackMethod = "fallback")
     public Mono<ResultDTO<ServiceInfo>> timeWithHeader() {
         return ReactiveRequestContextHolder.getRequest().flatMap(request -> {
             HttpHeaders headers = request.getHeaders();
@@ -60,5 +64,13 @@ public class UserWebClient {
                     .retrieve()
                     .bodyToMono(TYPE);
         });
+    }
+
+    public Mono<ResultDTO<ServiceInfo>> fallback(Throwable throwable) {
+        ResultDTO<ServiceInfo> resultDTO = new ResultDTO<>();
+        ServiceInfo serviceInfo = new ServiceInfo();
+        serviceInfo.setServiceName("fallback");
+        resultDTO.setData(serviceInfo);
+        return Mono.just(resultDTO);
     }
 }

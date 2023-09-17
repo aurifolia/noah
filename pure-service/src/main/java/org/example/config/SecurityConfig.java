@@ -74,7 +74,7 @@ public class SecurityConfig {
             @Override
             public boolean containsContext(HttpServletRequest request) {
                 String sessionId = request.getHeader("sessionId");
-                return StringUtils.hasText(sessionId) ? SharedData.map.containsKey(sessionId) : false;
+                return StringUtils.hasText(sessionId) && SharedData.map.containsKey(sessionId);
             }
         };
     }

@@ -24,7 +24,7 @@ public class TestController {
     @PreAuthorize("hasRole('USER')")
     @PostAuthorize("returnObject == 'test001'")
     public List<String> test001(@RequestBody List<String> args) {
-        return Arrays.asList("test001");
+        return List.of("test001");
     }
 
     @PostMapping("/002")

@@ -99,7 +99,7 @@ public class J2cBootstrapConfiguration implements ApplicationContextInitializer<
     }
 
     private class J2cPropertySourceProxy extends PropertySource<Map<String, String>> {
-        private PropertySource delegate;
+        private final PropertySource delegate;
 
         public J2cPropertySourceProxy(String name, Map<String, String> source, PropertySource delegate) {
             super(name, source);

@@ -229,7 +229,7 @@ public class Spider implements ApplicationRunner {
         }
     }
 
-    private Map<String, AtomicInteger> counter = new ConcurrentHashMap<>();
+    private final Map<String, AtomicInteger> counter = new ConcurrentHashMap<>();
 
     private void handleBoard(String urlname, JSONObject board, ExecutorService pool4Pin) {
         saveBoardInfo(board);
@@ -292,7 +292,7 @@ public class Spider implements ApplicationRunner {
     }
 
     List<PinInfo> pinInfoCache = new LinkedList<>();
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
     BlockingQueue<List<PinInfo>> queue = new ArrayBlockingQueue<>(200);
 
     private void addCache(PinInfo pinInfo) {
@@ -507,7 +507,7 @@ public class Spider implements ApplicationRunner {
     }
 
     public static class RestTemplateProxy {
-        private RestTemplate restTemplate;
+        private final RestTemplate restTemplate;
         private int retryTimes = 3;
 
         public RestTemplateProxy(int retryTimes, RestTemplate restTemplate) {
